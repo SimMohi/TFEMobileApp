@@ -4,9 +4,10 @@ import Logo from "../Components/Logo";
 import {Actions} from 'react-native-router-flux';
 import UsersAPI from "../services/UsersAPI";
 import Toast from 'react-native-simple-toast';
+import {AuthContext} from "../Components/context";
 
 
-const NewRegisterPage = () => {
+const NewRegisterPage = ({navigation}) => {
 
     const [user, setUser] = useState({
         firstName: "",
@@ -15,10 +16,6 @@ const NewRegisterPage = () => {
         password: "",
         passwordConfirm: ""
     });
-
-    const goBack = () =>  {
-        Actions.pop();
-    }
 
     const submit = async () => {
         if (user.password !== user.passwordConfirm) {
@@ -80,7 +77,7 @@ const NewRegisterPage = () => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.signupTextCont}>
-                    <TouchableOpacity onPress={goBack}>
+                    <TouchableOpacity onPress={()=> navigation.navigate("SignInScreen")}>
                         <Text style={styles.signUpText}>J'ai déjà un compte</Text>
                     </TouchableOpacity>
                 </View>

@@ -7,7 +7,6 @@ const Logo = () => {
             <Image style={styles.img}
                 source={require("../img/logo.png")}
             />
-            <Text style={styles.logoText}>Bienvenue</Text>
         </View>
     )
 }

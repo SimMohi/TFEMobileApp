@@ -4,11 +4,12 @@ import axios from "axios";
 import {API_URL, USERS_API} from "../config";
 import Toast from 'react-native-simple-toast';
 import AuthAPI from "../services/AuthAPI";
-import AuthContext from "../contexts/AuthContext";
+import {AuthContext} from "../Components/context";
 
 
-const LoginForm = () => {
+const LoginForm = ({navigation}) => {
 
+    const  { signIn } = React.useContext(AuthContext);
     const {setIsAuthenticated} = useContext(AuthContext);
 
 
@@ -24,6 +25,7 @@ const LoginForm = () => {
                 ]
             );
             const token = firstResponse[0]["data"]["token"];
+
             await AsyncStorage.setItem(
                 'token',
                 token
@@ -34,16 +36,13 @@ const LoginForm = () => {
             if (isAccepted == false){
                 Toast.show("Votre utilisateur n'a pas encore été accepté");
             } else {
-                setIsAuthenticated(true);
+                signIn(token)
             }
         }catch (e) {
             Toast.show("Email ou mot de passe incorrect");
         }
     }
 
-    const logout = async () => {
-        await AuthAPI.logout();
-    }
 
     const handleChangeUsername = (username) => {
         let copy = JSON.parse(JSON.stringify(credentials));
@@ -64,9 +63,9 @@ const LoginForm = () => {
             <TouchableOpacity style={styles.button} onPress={login}>
                 <Text style={styles.buttonText}>Se connecter</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={logout}>
-                <Text style={styles.buttonText}>Se déconnecter</Text>
-            </TouchableOpacity>
+            {/*<TouchableOpacity style={styles.button} onPress={logout}>*/}
+                {/*<Text style={styles.buttonText}>Se déconnecter</Text>*/}
+            {/*</TouchableOpacity>*/}
         </View>
     )
 }
@@ -104,4 +103,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default LoginForm
+export default LoginForm;

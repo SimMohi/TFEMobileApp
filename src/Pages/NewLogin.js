@@ -1,23 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native';
 import Logo from "../Components/Logo";
 import LoginForm from "../Components/LoginForm";
 import {Actions} from 'react-native-router-flux';
+import {AuthContext} from "../Components/context";
 
 
-
-const NewLoginPage = () => {
-
-    const goToRegister = () => {
-        Actions.register();
-    }
+const NewLoginPage = ({navigation}) => {
 
     return (
         <View style={styles.container}>
-            <Logo/>
+            <View style={styles.logo}>
+                <Logo />
+            </View>
             <LoginForm/>
             <View style={styles.signupTextCont}>
-                <TouchableOpacity onPress={goToRegister}><Text style={styles.signUpText}>Je n'ai pas de compte !</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate("SignUpScreen")}><Text style={styles.signUpText}>Je n'ai pas de compte !</Text></TouchableOpacity>
             </View>
         </View>
     )
@@ -38,6 +36,10 @@ const styles = StyleSheet.create({
     },
     signUpText : {
         color: "#ffffff"
+    },
+    logo: {
+        flex: 1,
+        marginTop: 100,
     }
 });
 
