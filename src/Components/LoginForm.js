@@ -27,7 +27,7 @@ const LoginForm = ({navigation}) => {
             const token = firstResponse[0]["data"]["token"];
 
             await AsyncStorage.setItem(
-                'token',
+                'userToken',
                 token
             );
             AuthAPI.setAxiosToken(token);

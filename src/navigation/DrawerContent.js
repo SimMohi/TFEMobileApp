@@ -1,12 +1,35 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {Avatar, Title, Caption, Paragraph, Drawer, Text, TouchableRipple, Switch} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AuthContext} from "../Components/context";
+import AuthAPI from "../services/AuthAPI";
+import UsersAPI from "../services/UsersAPI";
+import useInterval from "../Components/UseInterval";
 
 export function DrawerContent(props) {
     const { signOut } = React.useContext(AuthContext);
+    const [notif, setNotif] = useState(0);
+
+    const getUserId = async () => {
+        const id = await AuthAPI.getId();
+        fetchNotifications(id);
+    }
+
+    const fetchNotifications = async (id) => {
+        const response = await UsersAPI.getNotifications(id);
+        setNotif(response.convocations.length+response.notif.length);
+    }
+
+
+    useInterval(() => {
+        getUserId();
+    }, 60000);
+
+    useEffect(() => {
+        getUserId();
+    }, []);
     return(
         <View style={{flex:1}}>
             <DrawerContentScrollView {...props}>
@@ -41,12 +64,12 @@ export function DrawerContent(props) {
                         <DrawerItem
                             icon={({color, size}) => (
                                 <Icon
-                                    name="home-outline"
+                                    name="calendar"
                                     color={color}
                                     size={size}
                                 />
                             )}
-                            label="Home"
+                            label="Calendrier"
                             onPress={() => {props.navigation.navigate('Home')}}
                         />
                         <DrawerItem
@@ -57,19 +80,30 @@ export function DrawerContent(props) {
                                     size={size}
                                 />
                             )}
-                            label="Profile"
-                            onPress={() => {props.navigation.navigate('Profile')}}
+                            label="Profil"
+                            onPress={() => {props.navigation.navigate('Profil')}}
                         />
                         <DrawerItem
                             icon={({color, size}) => (
                                 <Icon
-                                    name="bookmark-outline"
+                                    name="message"
                                     color={color}
                                     size={size}
                                 />
                             )}
                             label="Chat"
                             onPress={() => {props.navigation.navigate('Chat')}}
+                        />
+                        <DrawerItem
+                            icon={({color, size}) => (
+                                <Icon
+                                    name="flag"
+                                    color={color}
+                                    size={size}
+                                />
+                            )}
+                            label={notif + " Notifications"}
+                            onPress={() => {props.navigation.navigate('Notif')}}
                         />
                     </Drawer.Section>
                 </View>
@@ -83,7 +117,7 @@ export function DrawerContent(props) {
                             size={size}
                         />
                     )}
-                    label="Sign Out"
+                    label="Déconnexion"
                     onPress={() => {signOut()}}
                 />
             </Drawer.Section>

@@ -16,7 +16,6 @@ const setup = async () => {
     const token = await AsyncStorage.getItem('token');
 
     if (token) {
-        console.log(token);
         const { exp: expiration } = jwtDecode(token);
         if (expiration * 1000 > new Date().getTime() ) {
             setAxiosToken(token);
@@ -26,8 +25,19 @@ const setup = async () => {
     }
 }
 
+const getId = async () => {
+    const token = await AsyncStorage.getItem('userToken');
+    if (token) {
+        const {id} = jwtDecode(token);
+        return id;
+    }
+    return false
+}
+
+
 const isAuthenticated = async () => {
     const token = await AsyncStorage.getItem('token');
+    console.log(token);
 
     if (token) {
         console.log(token);
@@ -42,5 +52,5 @@ const isAuthenticated = async () => {
 
 
 export default {
-    setAxiosToken, isAuthenticated, logout, setup
+    setAxiosToken, isAuthenticated, logout, setup, getId
 }

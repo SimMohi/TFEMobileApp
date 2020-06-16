@@ -1,0 +1,28 @@
+import { Notifications} from "expo"
+import * as Permissions from 'expo-permissions';
+
+export const subscribeToNotifications = () => {
+    console.log("oui");
+    Permissions.getAsync(Permissions.NOTIFICATIONS).then(existingPermission => {
+        console.log(existingPermission);
+        if (existingPermission.status !== "granted"){
+            Permissions.askAsync(Permissions.NOTIFICATIONS).then(permission => {
+                console.log(permission);
+                if (permission.status != "granted"){
+                    console.log("nope", permission.status);
+                    return;
+                } else {
+                    Notifications.getExpoPushTokenAsync().then(token => {
+                        console.log("hey", token);
+                    });
+                }
+            });
+        } else {
+            console.log("else");
+            Notifications.getExpoPushTokenAsync().then(token => {
+                console.log("token", token);
+            });
+        }
+    });
+}
+
