@@ -170,7 +170,7 @@ const ChatPage = () => {
             </View>
             <SafeAreaView style={styles.container}>
                 {/*<ScrollView style={styles.scrollView}>*/}
-                <ScrollView style={styles.scrollView}  ref={ref => {this.scrollView = ref}} onContentSizeChange={() => this.scrollView.scrollToEnd({animated: true})}>
+                <ScrollView>
                     <View style={styles.containerMessages}>
                         {activeMessage.map((mess, index) =>
                             mess["senderId"] !== userId &&
@@ -185,17 +185,17 @@ const ChatPage = () => {
                             </View>
                         )}
                     </View>
-                    <View style={{flexDirection: "row", marginVertical: 20}}>
-                        <TextInput style={styles.newMess} value={newMessage} onChangeText={handleChange}
-                                   placeholder={"Votre message"} placeholderTextColor={"#f54b42"}/>
-                        <TouchableOpacity style={styles.button} onPress={submit}>
-                            <Text style={{ color: "#fff", fontSize: 18,}}>Envoyer </Text>
-                        </TouchableOpacity>
-
-                    </View>
                 </ScrollView>
             </SafeAreaView>
-
+            <View style={{flex:1, flexDirection: "column-reverse"}}>
+                <View style={{flexDirection: "row", marginVertical: 20}}>
+                    <TextInput style={styles.newMess} value={newMessage} onChangeText={handleChange}
+                               placeholder={"Votre message"} placeholderTextColor={"#f54b42"}/>
+                    <TouchableOpacity style={styles.button} onPress={submit}>
+                        <Text style={{ color: "#fff", fontSize: 18,}}>Envoyer </Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         </>)
 }
 

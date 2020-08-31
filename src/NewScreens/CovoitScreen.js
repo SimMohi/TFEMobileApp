@@ -16,6 +16,7 @@ import AuthAPI from "../services/AuthAPI";
 import UsersAPI from "../services/UsersAPI";
 import useInterval from "../Components/UseInterval";
 import Toast from 'react-native-simple-toast';
+import {AntDesign} from "@expo/vector-icons";
 
 
 const NotifScreen = () => {
@@ -221,9 +222,10 @@ const NotifScreen = () => {
                                 <View>
                                     <View style={{flexDirection: "row", }}>
                                         <Text style={{width : 250, }}>{not.message}</Text>
-                                        <View style={{marginLeft : 10, justifyContent: "center"}}>
-                                            <TouchableOpacity style={{backgroundColor: "#eb4034",  borderRadius: 20, padding: 8,}} onPress={() => removeNot(not.id)}>
-                                                <Text style={{ color:"#fff"}}>D'accord</Text>
+                                        <View style={{marginLeft : 25, justifyContent: "center"}}>
+                                            <TouchableOpacity style={{backgroundColor: "#eb4034",  borderRadius: 20, padding: 4,}} onPress={() => removeNot(not.id)}>
+                                                <Text style={{ color:"#fff"}}><AntDesign name={"close"} size={25}
+                                                                                         color="white" ></AntDesign></Text>
                                             </TouchableOpacity>
                                         </View>
                                     </View>

@@ -105,6 +105,17 @@ export function DrawerContent(props) {
                             label={notif + " Notifications"}
                             onPress={() => {props.navigation.navigate('Notif')}}
                         />
+                        <DrawerItem
+                            icon={({color, size}) => (
+                                <Icon
+                                    name="car"
+                                    color={color}
+                                    size={size}
+                                />
+                            )}
+                            label={"Covoiturage"}
+                            onPress={() => {props.navigation.navigate('Covoit')}}
+                        />
                     </Drawer.Section>
                 </View>
             </DrawerContentScrollView>
